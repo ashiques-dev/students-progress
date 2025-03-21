@@ -1,0 +1,69 @@
+{% if page %}
+
+<div
+  id="schools"
+  class="grid md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-8 mb-8"
+>
+  {% for i in page %}
+  <div
+    class="h-80 sm:h-96 w-full relative rounded-lg overflow-hidden shadow-lg border border-stone-300 group"
+  >
+    <div
+      class="absolute bg-stone-200 inset-0 -z-10 {% if not i.school_picture %}animate-pulse{% endif %}"
+    ></div>
+    <div
+      class="absolute z-10 bottom-2 left-2 group-hover:bottom-3 group-hover:left-3 group-hover:p-3 p-2 bg-stone-100/70 backdrop-blur-lg rounded-lg group-hover:bg-stone-100 group-hover:border group-hover:border-stone-300 transition-all duration-300 ease-in-out w-3/4 md:w-1/2"
+    >
+      <p class="text-base text-stone-950 font-medium">{{ i.name }}</p>
+      <p class="capitalize text-stone-800">
+        <span>{{ i.place|default:"unknown place" }} </span>
+      </p>
+    </div>
+    
+    <a {% if request.user.is_superuser %} href="{% url 'admin-get-school' id=i.id %}"  {% else %} href="{% url 'user-get-school' id=i.id %}"    {% endif %} class="absolute inset-0 z-10"></a>
+   
+
+  {% if i.school_picture %}
+    <img
+      src="{{media_url}}{{ i.school_picture }}"
+      alt="School Picture"
+      class="size-full object-cover object-center group-hover:scale-110 transition-all duration-300 ease-in-out group-hover:grayscale"
+    />
+    {%else%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="size-full"
+    >
+      <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
+      <path
+        d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"
+      />
+      <path d="M18 5v17" />
+      <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
+      <path d="M6 5v17" />
+      <circle cx="12" cy="9" r="2" />
+    </svg>
+
+    {% endif %}
+  </div>
+
+  {% endfor %}
+</div>
+{% include 'pages/components/paginator.html' %} {% else %}
+
+<h1
+  id="empty_school"
+  class="text-3xl font-medium tracking-tight md:text-4xl text-center"
+>
+  Looks like there are no schools to show right now.
+</h1>
+
+{% endif %}

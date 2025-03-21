@@ -1,0 +1,27 @@
+{% extends 'pages/admin/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} schools {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+<div class="flex justify-end mb-6 md:mb-8">
+  <button
+    data-method="new"
+    id="school_modal_open"
+    type="button"
+    class="btn btn-default btn-size"
+  >
+    Add new school
+  </button>
+</div>
+
+<!-- All schools -->
+{% include 'pages/school/all_schools.html' %}
+<!-- Add new school -->
+{% include 'pages/school/add_or_update_school.html' %} {% endblock content %}
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/add_or_update_school.js' %}"></script>
+{% endblock script %}

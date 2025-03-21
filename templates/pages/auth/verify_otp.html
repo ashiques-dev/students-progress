@@ -1,0 +1,40 @@
+{% extends 'pages/auth/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} account verification {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+<h1 class="mb-2 gradient-heading">Verify your account</h1>
+<h4 class="text-lg mb-6 text-red-500">
+  We have sent the verification code to your email
+</h4>
+
+<form novalidate class="mb-6" id="verify_otp_form">
+  {% csrf_token %}
+  <div class="space-y-1 mb-6" id="otp_container">
+    <label for="otp" class="label">Enter (OTP) </label>
+    <input autofocus type="number" name="otp" id="otp" class="input" />
+  </div>
+  <div class="flex justify-center">
+    <button
+      type="submit"
+      id="verify_otp_button"
+      class="btn btn-default btn-size w-1/2"
+    >
+      Verify OTP
+    </button>
+  </div>
+</form>
+
+<button type="button" id="resend_otp_button" class="btn btn-link">
+  Resend OTP
+</button>
+
+{% endblock content %}
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/verify_otp.js' %}"></script>
+<script type="module" src="{% static 'js/resend_otp.js' %}"></script>
+{% endblock script %}

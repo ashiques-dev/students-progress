@@ -1,0 +1,48 @@
+{% if page %}
+<div id="students" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mb-8">
+  {% for student in page %}
+  <div
+    class="bg-stone-100 hover:bg-stone-200 flex gap-4 px-4 py-3 rounded-lg group transition-colors duration-300 overflow-hidden"
+  >
+    <div class="flex flex-col gap-3">
+      <div
+        class="size-32 group-hover:size-[8.5rem] transition-all duration-300 bg-stone-300 rounded-full overflow-hidden group-hover:shadow-md"
+      >
+        {% if student.student_picture %}
+        <img
+          src="{{media_url}}{{student.student_picture}}"
+          alt="{{student.name}} picture"
+          class="size-full object-cover object-center"
+        />
+        {% else %}
+        <p class="text-8xl size-full flex items-center justify-center">
+          {% if student.gender == 'Male' %}👦 {% else %} 👧 {% endif %}
+        </p>
+        {% endif %}
+      </div>
+      <a {% if request.user.is_superuser %} href="{% url 'admin-get-student' id=student.id %}" {% else %} href="{% url 'user-get-student' school_id=id id=student.id %}"    {% endif %} class="btn btn-ghost btn-size group-hover:bg-stone-100"
+        >View profile</a
+      >
+    </div>
+    <div class="w-full space-y-2 lg:text-base">
+      <p class="text-base md:text-lg font-medium !mb-4 w-9/12 mx-auto truncate">
+        {{student.name}}
+      </p>
+      <p>{{student.emis}}</p>
+      <p>{{student.gender}}</p>
+      <p>{{student.dob}}</p>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% include 'pages/components/paginator.html' %} 
+{% else %}
+<h1
+  id="empty_student"
+  class="text-3xl font-medium tracking-tight md:text-4xl text-center"
+>
+  Looks like there are no students list to show right now.
+</h1>
+
+{% endif %}

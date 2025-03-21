@@ -1,0 +1,38 @@
+{% extends 'pages/auth/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} sign in {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+<h1 class="mb-2 gradient-heading">Welcome back!</h1>
+<h4 class="text-lg mb-6">Sign in to continue!</h4>
+
+<form novalidate class="mb-6" id="sign_in_form">
+  {% csrf_token %} {% include 'pages/auth/forms/sign_in_form.html' %}
+  <div class="flex justify-center">
+    <button
+      type="submit"
+      id="sign_in_button"
+      class="btn btn-default btn-size w-1/2"
+    >
+      Sign In
+    </button>
+  </div>
+</form>
+
+{% if role != 'superuser' %}
+<p>
+  Don't have an account?
+  <a href="{% url 'sign-up' %}" class="link ms-1">Register</a>
+</p>
+{% endif %}
+
+
+{% endblock content %}
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/extras/password_visibility.js' %}"></script>
+<script type="module" src="{% static 'js/sign_in.js' %}"></script>
+{% endblock script %}

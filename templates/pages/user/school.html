@@ -1,0 +1,19 @@
+{% extends 'pages/user/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} school {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+<!-- school -->
+{% include 'pages/school/school.html' %} 
+<!-- update school -->
+{% include 'pages/school/add_or_update_school.html' %}
+{% endblock content %}
+
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/add_or_update_school.js' %}"></script>
+
+{% endblock script %}

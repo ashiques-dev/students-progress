@@ -1,0 +1,105 @@
+<div
+  id="student_modal"
+  class="fixed top-0 inset-0 z-50 overflow-y-scroll pt-16 pb-10 backdrop-blur-sm bg-stone-100/80 hidden"
+>
+  <h1 class="mb-6 gradient-heading text-center">{% if student.name %}Update student info {% else %} Add new student  {% endif %}</h1>
+  <form
+    id="student_form"
+    class="w-[95%] max-w-xl mx-auto px-2 md:px-4 py-6 md:py-8 rounded-lg shadow-md border border-stone-200 bg-white"
+  >
+    {% csrf_token %}
+
+    <div class="grid md:grid-cols-2 gap-x-3 gap-y-6 mb-6">
+      <div class="space-y-1" id="name_container">
+        <label for="name" class="label">Student name</label>
+        <input type="text" name="name" id="name" {% if student.name %} value="{{student.name}}" {% endif %}  class="input" />
+      </div>
+
+      <div class="space-y-1" id="emis_container">
+        <label for="emis" class="label">Emis ID</label>
+        <input type="number" name="emis" id="emis" {% if student.emis %} value="{{student.emis}}" {% endif %} class="input" />
+      </div>
+
+      <div class="space-y-1" id="dob_container">
+    <label for="dob" class="label">D.O.B</label>
+    <input type="date" name="dob" id="dob" 
+           value="{% if student.dob %}{{ student.dob|date:'Y-m-d' }}{% endif %}" 
+           class="input" />
+</div>
+
+
+      <div class="space-y-1" id="gender_container">
+    <label for="gender" class="label">Gender</label>
+    <select name="gender" id="gender" class="input">
+        <option value="Male" {% if student.gender == 'Male' %} selected {% endif %}>Male</option>
+        <option value="Female" {% if student.gender == 'Female' %} selected {% endif %}>Female</option>
+        <option value="Other" {% if student.gender == 'Other' %} selected {% endif %}>Other</option>
+    </select>
+</div>
+
+
+      <div class="space-y-1" id="class_name_container">
+        <label for="class_name" class="label">Class name</label>
+        <input type="number" name="class_name" id="class_name" {% if latest_class.class_name %} value="{{latest_class.class_name}}" {% endif %} class="input" />
+      </div>
+      <div class="space-y-1" id="year_container">
+        <label for="year" class="label">Batch year</label>
+        <input type="number" name="year" id="year" {% if latest_class.year %} value="{{latest_class.year}}" {% endif %} class="input" />
+      </div>
+    </div>
+
+    <div class="space-y-6 mb-6 order-3 relative" id="student_picture_container">
+      <button
+        type="button"
+        id="student_photo"
+        class="btn btn-ghost h-10 px-4 py-2 group"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="group-hover:rotate-180 transition-all duration-300"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+
+        <span> {% if student.student_picture %} Change Picture {% else %} Student Picture {% endif %}</span>
+      </button>
+      <input
+        type="file"
+        name="student_picture"
+        id="student_picture"
+        class="hidden"
+        accept="image/jpeg, image/webp, image/img,image/png,"
+      />
+       {% if student.student_picture %}
+    <img
+      src="{{student.student_picture.url}}"
+      alt="school picture" class="h-80 w-full  object-cover object-center mx-auto rounded-lg">
+      {% endif %}
+    </div>
+
+    <div class="flex justify-center gap-x-3">
+      <button
+        id="student_modal_close"
+        type="button"
+        class="btn btn-destructive btn-size w-1/2"
+      >
+        Cancel
+      </button>
+      <button
+        id="student_modal_save"
+        type="submit"
+        class="btn btn-default btn-size w-1/2"
+      >
+        {% if student.name %}  Update {% else %} Save {% endif %}
+      </button>
+    </div>
+  </form>
+</div>

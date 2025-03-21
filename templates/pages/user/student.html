@@ -1,0 +1,24 @@
+{% extends 'pages/user/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} student {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+
+<!-- student -->
+ {% include 'pages/student/student.html' %}
+ <!-- update students -->
+{% include 'pages/student/add_or_update_student.html' %}
+{% include 'pages/student/new_report.html' %}
+
+{% endblock content %}
+
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/add_or_update_student.js' %}"></script>
+<script type="module" src="{% static 'js/new_report.js' %}"></script>
+<script type="module" src="{% static 'js/upgrade_class.js' %}"></script>
+
+{% endblock script %}

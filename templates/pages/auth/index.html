@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {% endblock title %}</title>
+
+    <link rel="icon" href="{% static 'logos/logo.jpg' %}">
+
+    <link rel="stylesheet" href="{% static 'css/system.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="antialiased text-sm bg-white text-stone-700">
+    <div class="size-24 md:size-32 mx-auto mb-10 md:mb-14 pt-4">
+      <img
+        src="{% static 'logos/logo.jpg' %}"
+        alt="LLF"
+        class="size-full object-cover object-center"
+      />
+    </div>
+
+    <!-- including message -->
+    {% include 'pages/components/message.html' %}
+
+    <!-- block content -->
+    <div class="max-w-lg mx-auto px-2 md:px-4 pb-10">
+      {% block content %} {% endblock content %}
+    </div>
+
+    <!-- block script -->
+    <script src="{% static 'jquery.js' %}"></script>
+    {% block script %} {% endblock script %}
+  </body>
+</html>

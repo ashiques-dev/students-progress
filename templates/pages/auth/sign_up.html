@@ -1,0 +1,35 @@
+{% extends 'pages/auth/index.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} registration {%endblock title %}
+
+<!-- block content -->
+{% block content %}
+<h1 class="mb-2 gradient-heading">Create your account</h1>
+<h4 class="text-lg mb-6">Let's get started</h4>
+
+<form novalidate class="mb-6" id="sign_up_form">
+  {% csrf_token %} {% include 'pages/auth/forms/sign_up_form.html' %}
+  <div class="flex justify-center">
+    <button
+      type="submit"
+      id="sign_up_button"
+      class="btn btn-default btn-size w-1/2"
+    >
+      Create an account
+    </button>
+  </div>
+</form>
+
+<p>
+  Already have an account?
+  <a href="{% url 'sign-in' 'user' %}" class="link ms-1">Sign In</a>
+</p>
+
+{% endblock content %}
+
+<!-- block script -->
+{% block script %}
+<script type="module" src="{% static 'js/extras/password_visibility.js' %}"></script>
+<script type="module" src="{% static 'js/sign_up.js' %}"></script>
+{% endblock script %}

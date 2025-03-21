@@ -1,0 +1,123 @@
+<div
+  class="mb-6 md:mb-8 xl:mb-12 flex items-center justify-between flex-wrap gap-x-3 gap-y-8"
+>
+  <div class="md:order-2 flex justify-end gap-3 flex-wrap">
+    <button data-school-id="{{school.id}}" data-method='update' id="school_modal_open" type="button" class="btn btn-default btn-size">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"
+        />
+        <path
+          d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+        />
+        <path d="M8 18h1" />
+      </svg>
+      Update school info
+    </button>
+    <a
+      class="btn btn-default btn-size"
+      {% if request.user.is_superuser %}
+     href="{% url 'admin-all-students' school.id %}"
+     {% else %}
+     href="{% url 'user-all-students' school.id %}"
+     {% endif %}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+
+      View all students</a
+    >
+    
+  </div>
+
+  <h1 id="school_name" class="md:order-1 gradient-heading pb-2">
+    {{school.name }}
+  </h1>
+</div>
+
+<div class="mb-6">
+  <p >last updated : <span id="school_updated_at"> {{school.updated_at|date:"b d, Y" }} </span></p>
+  <p >changes made by : <span id="school_updated_by"> {% if request.user.username == school.updated_by.username %} you {% else %} {% if request.user.is_superuser %}{{school.updated_by}} {% else %} {{school.updated_by.username}} {% endif %} {% endif %} </span></p>
+</div>
+
+<div class="w-64 relative border border-stone-300 shadow-md mb-6 px-5 py-3 rounded-full flex flex-col items-center justify-self-end">
+  <form  action=" {% if request.user.is_superuser %} {% url 'admin-all-students' school.id %}  {% else %} {% url 'user-all-students' school.id %} {% endif %}" method="get" class=" flex gap-2">
+    <input placeholder="class" type="number" name="class_name" id="class_name" autofocus class="h-9 bg-transparent w-full px-3 py-1 placeholder-stone-800" required>
+    <input placeholder="batch" type="number" name="year" id="year" class="h-9 bg-transparent w-full px-3 py-1 placeholder-stone-800" required>
+    <button type="submit" class="btn btn-destructive size-8 rounded-full shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+  </form>
+</div>
+<div
+id="school_data"
+  class="h-svh rounded-lg overflow-hidden shadow-lg border border-stone-300 relative"
+>
+  <div class="absolute max-w-96 top-4 left-4">
+    <p
+      id="school_location"
+      class="p-3 mb-3 rounded-lg bg-stone-100/70 backdrop-blur-lg md:text-base font-medium"
+    >
+      {{school.place|default:"Not provided"}}, 
+      {{school.district|default:"Not provided"}}, {{school.state|default:"Not provided"}}
+    </p>
+    <p class="p-3 mb-3 w-fit rounded-lg bg-stone-100/70 backdrop-blur-lg">
+      <span class="text-red-500">Note: </span>
+      <span id="school_description"
+        >{{school.description|default:"Not provided"}}
+      </span>
+    </p>
+  </div>
+  
+  {% if school.school_picture %}
+  <img
+    id="school_photo"
+    src="{{school.school_picture.url}}"
+    alt="school picture"
+    class="size-full object-center object-cover"
+  />
+  {%else%}
+  <svg
+  id="no_school_photo"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="size-full"
+  >
+    <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
+    <path
+      d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"
+    />
+    <path d="M18 5v17" />
+    <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
+    <path d="M6 5v17" />
+    <circle cx="12" cy="9" r="2" />
+  </svg>
+  {% endif %}
+</div>
